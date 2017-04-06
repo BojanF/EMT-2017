@@ -51,7 +51,7 @@ public class BookHelperTest {
     Category c = new Category();
     c.name = "base";
     Category base = categoryRepository.save(c);
-    Book book = serviceHelper.createBook("Java essentials", base.id, new String[]{"Joshua Bloch"}, "123", 100d);
+    book = serviceHelper.createBook("Java essentials", base.id, new String[]{"Joshua Bloch"}, "123", 100d);
 
 
 //    List<Book> foundBooks = searchRepository.searchKeyword(Book.class, "java", "name", "category.name");

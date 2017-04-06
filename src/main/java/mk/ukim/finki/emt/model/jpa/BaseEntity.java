@@ -9,6 +9,7 @@ import java.io.Serializable;
 /**
  * @author Riste Stojanov
  */
+
 @MappedSuperclass
 public class BaseEntity  {
 

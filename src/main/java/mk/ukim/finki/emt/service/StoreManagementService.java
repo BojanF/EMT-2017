@@ -96,5 +96,10 @@ public interface StoreManagementService {
   );
 
 
-  BookPicture addBookPicture(Long bookId, byte[] bytes, String contentType) throws SQLException;
+  BookPicture addBookPicture(
+    Long bookId,
+    byte[] bytes,
+    String contentType
+  ) throws SQLException;
+
 }

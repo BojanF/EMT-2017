@@ -69,7 +69,7 @@ public class CartHelperTest {
 
     @Test
     public void testCreateDeleteCart(){
-        Cart cart = cartHelper.createCart(LocalDateTime.now(), 0d);
+        Cart cart = cartHelper.createCart(LocalDateTime.now().plusMonths(1), 0d);
         Assert.assertNotNull("Cart is not null!",  cartRepository.findOne(cart.id));
 
 
@@ -81,13 +81,13 @@ public class CartHelperTest {
     @Test
     public void testAddDeleteCartItem(){
 
-        Cart cart = cartHelper.createCart(LocalDateTime.now(), 0d);
+        Cart cart = cartHelper.createCart(LocalDateTime.now().plusMonths(1), 0d);
         CartItem cartItem = cartHelper.addCartItem(cart, bookList.get(1), 3);
 
         Assert.assertNotNull(cartItemRepository.findOne(cartItem.id));
         Assert.assertEquals(cartRepository.findOne(cart.id).id, cartItemRepository.findOne(cartItem.id).cart.id);
 
-        Cart cart1 = cartHelper.createCart(LocalDateTime.now(), 0d);
+        Cart cart1 = cartHelper.createCart(LocalDateTime.now().plusMonths(1), 0d);
         Assert.assertNotEquals(cartRepository.findOne(cart1.id).id, cartItemRepository.findOne(cartItem.id).cart.id);
 
         cartHelper.removeCartItem(cart, cartItem);
@@ -96,7 +96,7 @@ public class CartHelperTest {
 
     @Test
     public void testUpdateCartTotalPrice(){
-        Cart cart = cartHelper.createCart(LocalDateTime.now(), 0d);
+        Cart cart = cartHelper.createCart(LocalDateTime.now().plusMonths(1), 0d);
         Cart cartFromDB = cartHelper.updateCartTotalPrice(cart, 300d);
 
         Assert.assertNotEquals(0d, cartFromDB.totalPrice);
@@ -105,9 +105,9 @@ public class CartHelperTest {
 
     @Test
     public void testUpdateCartExpiryDate(){
-        Cart cart = cartHelper.createCart(LocalDateTime.now(), 0d);
+        Cart cart = cartHelper.createCart(LocalDateTime.now().plusMonths(1), 0d);
         LocalDateTime oldExpiryDate = cart.expiryDate;
-        LocalDateTime newExpiryDate = LocalDateTime.now().plusDays(3);
+        LocalDateTime newExpiryDate = oldExpiryDate.plusDays(3);
         Cart cartFromDB = cartHelper.updateCartExpiryDate(cart, newExpiryDate);
 
         Assert.assertNotEquals(cartFromDB.expiryDate, oldExpiryDate);
@@ -116,7 +116,7 @@ public class CartHelperTest {
 
     @Test
     public void testUpdateCartItemQuantity(){
-        Cart cart = cartHelper.createCart(LocalDateTime.now(), 0d);
+        Cart cart = cartHelper.createCart(LocalDateTime.now().plusMonths(1), 0d);
         CartItem cartItem = cartHelper.addCartItem(cart, bookList.get(0), 3);
 
         Assert.assertEquals(3, cartItem.quantity);
@@ -131,7 +131,7 @@ public class CartHelperTest {
 
     @Test
     public void testGetCartItemPrice(){
-        Cart cart = cartHelper.createCart(LocalDateTime.now(), 0d);
+        Cart cart = cartHelper.createCart(LocalDateTime.now().plusMonths(1), 0d);
 
         CartItem cartItem = cartHelper.addCartItem(cart, bookList.get(2), 4 );
 
@@ -140,7 +140,7 @@ public class CartHelperTest {
 
     @Test
     public void testDeleteAllCartItems(){
-        Cart cart = cartHelper.createCart(LocalDateTime.now(), 0d);
+        Cart cart = cartHelper.createCart(LocalDateTime.now().plusMonths(1), 0d);
 
         CartItem cartItem1 = cartHelper.addCartItem(cart, bookList.get(0), 1);
         CartItem cartItem2 = cartHelper.addCartItem(cart, bookList.get(1), 2);
@@ -153,7 +153,7 @@ public class CartHelperTest {
         Assert.assertNull(cartItemRepository.findOne(cartItem1.id));
         Assert.assertNull(cartItemRepository.findOne(cartItem2.id));
 
-        Cart cart1 = cartHelper.createCart(LocalDateTime.now(), 0d);
+        Cart cart1 = cartHelper.createCart(LocalDateTime.now().plusMonths(1), 0d);
         CartItem cartItem3 = cartHelper.addCartItem(cart1, bookList.get(0), 5);
         Assert.assertNotNull(cartItem3);
         Assert.assertNotNull(cartItem3);
@@ -161,7 +161,7 @@ public class CartHelperTest {
 
     @Test
     public void testGetAllCartItems(){
-        Cart cart = cartHelper.createCart(LocalDateTime.now(), 0d);
+        Cart cart = cartHelper.createCart(LocalDateTime.now().plusMonths(1), 0d);
 
         CartItem cartItem1 = cartHelper.addCartItem(cart, bookList.get(0), 1);
         CartItem cartItem2 = cartHelper.addCartItem(cart, bookList.get(1), 2);
@@ -180,7 +180,7 @@ public class CartHelperTest {
 
     @Test
     public void testGetCartItemsQuantity(){
-        Cart cart = cartHelper.createCart(LocalDateTime.now(), 0d);
+        Cart cart = cartHelper.createCart(LocalDateTime.now().plusMonths(1), 0d);
 
         CartItem carItem1 = cartHelper.addCartItem(cart, bookList.get(2), 4 );
         CartItem carItem2 = cartHelper.addCartItem(cart, bookList.get(1), 3 );
@@ -192,7 +192,7 @@ public class CartHelperTest {
 
     @Test
     public void testEntireProcess(){
-        Cart cart = cartHelper.createCart(LocalDateTime.now(), 0d);
+        Cart cart = cartHelper.createCart(LocalDateTime.now().plusMonths(1), 0d);
 
         CartItem cartItem1 = cartHelper.addCartItem(cart, bookList.get(0), 1);
         Assert.assertEquals(100d, cart.totalPrice, 0d);

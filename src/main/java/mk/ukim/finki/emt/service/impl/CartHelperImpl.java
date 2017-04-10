@@ -18,6 +18,7 @@ import java.util.List;
 @Service
 public class CartHelperImpl implements CartServiceHelper {
 
+
     private CartRepository cartRepository;
     private CartItemRepository cartItemRepository;
 
@@ -37,6 +38,7 @@ public class CartHelperImpl implements CartServiceHelper {
 
     @Override
     public void removeCart(Long cartId) {
+        deleteAllCartItems(cartRepository.findOne(cartId));
         cartRepository.delete(cartId);
     }
 
@@ -46,52 +48,75 @@ public class CartHelperImpl implements CartServiceHelper {
         cartItem.cart = cart;
         cartItem.book = book;
         cartItem.quantity = quantity;
-        addToTotalPrice(cart, book.price*quantity);
+        Double totalPrice = cart.totalPrice;
+        totalPrice += getCartItemPrice(cartItem);
+        updateCartTotalPrice(cart, totalPrice);
         return cartItemRepository.save(cartItem);
     }
 
     @Override
     public void removeCartItem(Cart cart, CartItem cartItem) {
-        subtractFromTotalPrice(cart, cartItem.book.price*cartItem.quantity);
+        Double totalPrice = cart.totalPrice;
+        totalPrice -= getCartItemPrice(cartItem);
+        updateCartTotalPrice(cart, totalPrice);
         cartItemRepository.delete(cartItem.id);
     }
 
     @Override
-    public Cart addToTotalPrice(Cart cart, Double price) {
-        Double totalPrice = cart.totalPrice;
-        cart.totalPrice = totalPrice + price;
+    public Cart updateCartTotalPrice(Cart cart, Double price) {
+        cart.totalPrice = price;
         return cartRepository.save(cart);
     }
 
     @Override
-    public Cart subtractFromTotalPrice(Cart cart, Double price) {
-        Double totalPrice = cart.totalPrice;
-        cart.totalPrice = totalPrice - price;
+    public Cart updateCartExpiryDate(Cart cart, LocalDateTime newExpiryDate) {
+        cart.expiryDate = newExpiryDate;
         return cartRepository.save(cart);
     }
 
     @Override
-    public Double getCartItemPrice(Cart cart, CartItem cartItem) {
-        return null;
+    public CartItem updateCartItemQuantity(Cart cart, CartItem cartItem, int newQuantity) {
+        Double totalPrice = cart.totalPrice;
+        cart.totalPrice = totalPrice - getCartItemPrice(cartItem);
+
+        cartItem.quantity = newQuantity;
+
+        cart.totalPrice += getCartItemPrice(cartItem);
+        cartRepository.save(cart);
+
+        return cartItemRepository.save(cartItem);
     }
 
     @Override
-    public void changeCartItemQuantity(Cart cart, CartItem cartItem) {
+    public Double getCartItemPrice(CartItem cartItem) {
+        return cartItem.quantity * cartItem.book.price;
+    }
+
+    @Override
+    public void deleteAllCartItems(Cart cart) {
+        List<CartItem> cartItemList = getAllCartItems(cart);
+
+        for (CartItem ca:cartItemList ) {
+
+            cartItemRepository.delete(ca.id);
+        }
 
     }
 
     @Override
-    public List<CartItem> getCartItems(Cart cart) {
-        return null;
-    }
-
-    @Override
-    public Long getCartTotal(Cart cart) {
-        return null;
+    public List<CartItem> getAllCartItems(Cart cart) {
+        return cartItemRepository.findByCartId(cart.id);
     }
 
     @Override
     public int getCartItemsQuantity(Cart cart) {
-        return 0;
+        int totalCartItemsQuantity = 0;
+
+        List<CartItem> cartItems = getAllCartItems(cart);
+        for (CartItem ca:cartItems) {
+            totalCartItemsQuantity += ca.quantity;
+        }
+        return totalCartItemsQuantity;
     }
+
 }

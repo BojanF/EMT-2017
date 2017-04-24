@@ -43,6 +43,8 @@ public class Book extends BaseEntity {
 
   public Boolean promoted;
 
+  public String description;
+
   @ManyToMany(fetch = FetchType.EAGER)
   @IndexedEmbedded
   public List<Author> authors = new ArrayList<>();

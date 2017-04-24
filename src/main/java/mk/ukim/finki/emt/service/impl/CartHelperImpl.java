@@ -48,6 +48,13 @@ public class CartHelperImpl implements CartServiceHelper {
         cartItem.cart = cart;
         cartItem.book = book;
         cartItem.quantity = quantity;
+
+        //ako novo dodadenata kniga e duplikat, ja brise starta, ja stava novata
+        CartItem existing = cartItemRepository.findBookInCart(cart.id, book.id);
+        if(existing != null){
+            removeCartItem(cart, existing);
+        }
+
         Double totalPrice = cart.totalPrice;
         totalPrice += getCartItemPrice(cartItem);
         updateCartTotalPrice(cart, totalPrice);
@@ -97,9 +104,11 @@ public class CartHelperImpl implements CartServiceHelper {
         List<CartItem> cartItemList = getAllCartItems(cart);
 
         for (CartItem ca:cartItemList ) {
-
             cartItemRepository.delete(ca.id);
         }
+
+        cart.totalPrice = 0d;
+        cartRepository.save(cart);
 
     }
 

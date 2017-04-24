@@ -5,22 +5,40 @@
   <h1>Products:</h1>
 
   <div th:each="prod : ${products}" class="row">
-    <div class="col-md-4">
-      <img class="img-responsive" th:src="@{/book/{id}/picture(id=${prod.id})}"></img>
-    </div>
-    <div class="col-md-8">
-      <div th:text="${prod.name}"></div>
-      <div th:text="${prod.isbn}"></div>
-      <a th:href="@{/category/{categoryId}(categoryId=${prod.category.id})}"
-         th:text="${prod.category.name}">
-      </a>
-      <div>
-        <a th:each="a : ${prod.authors}" th:href="@{/books/by_author/{authorId}(authorId=${a.id})}"
-           th:text="${a.nameAndLastName}">
-        </a>
+    <form th:action="@{/cart/addItem}" method="POST" xmlns:th="http://www.thymeleaf.org">
+      <div class="col-md-4">
+        <img class="img-responsive" th:src="@{/book/{id}/picture(id=${prod.id})}"></img>
       </div>
-    </div>
-    <hr/>
+      <div class="col-md-8">
+
+        <input type="hidden" th:value="${prod.id}" name="prodID"> </input>
+        <input type="hidden" th:value="${categoryId}" name="categoryId"> </input>
+
+        <h3 th:text="${prod.name}"></h3>
+        <p th:text="${prod.description}"> </p>
+        <div th:text="${prod.isbn}"></div>
+        <div th:text="${prod.price}"></div>
+        <a th:href="@{/category/{categoryId}(categoryId=${prod.category.id})}"
+           th:text="${prod.category.name}">
+        </a>
+        <div>
+          <a th:each="a : ${prod.authors}" th:href="@{/books/by_author/{authorId}(authorId=${a.id})}"
+             th:text="${a.nameAndLastName}">
+          </a>
+        </div>
+       <div class="col-md-3">
+         <label> Quantity </label>
+         <input type="number" min="1" value="1" name="quantity" class="form-control"> </input>
+       </div>
+        <br/> <br/> <br/> <br/>
+        <div>
+        <button type="submit" class="btn btn-primary" value="Add to Cart">
+          <span class="glyphicon glyphicon-shopping-cart"  aria-hidden="true"></span> Add to Cart
+        </button>
+       </div>
+      </div>
+      <hr/>
+    </form>
   </div>
   <hr/>
 </div>

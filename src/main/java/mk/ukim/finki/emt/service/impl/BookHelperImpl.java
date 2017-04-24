@@ -51,8 +51,8 @@ public class BookHelperImpl implements BookServiceHelper {
   }
 
   @Override
-  public Book createBook(String name, Long categoryId, String[] authors, Long[] existingAuthors, String isbn, Double price) {
-    Book book = createBookWithNewAuthors(name, categoryId, authors, isbn, price);
+  public Book createBook(String name, Long categoryId, String[] authors, Long[] existingAuthors, String isbn, Double price, String description) {
+    Book book = createBookWithNewAuthors(name, categoryId, authors, isbn, price, description);
     for (Long authorId : existingAuthors) {
       book.authors.add(authorsRepository.findOne(authorId));
     }
@@ -61,8 +61,8 @@ public class BookHelperImpl implements BookServiceHelper {
 
 
   @Override
-  public Book createBook(String name, Long categoryId, String[] authors, String isbn, Double price) {
-    Book book = createBookWithNewAuthors(name, categoryId, authors, isbn, price);
+  public Book createBook(String name, Long categoryId, String[] authors, String isbn, Double price, String description) {
+    Book book = createBookWithNewAuthors(name, categoryId, authors, isbn, price, description);
     return bookRepository.save(book);
   }
 
@@ -104,11 +104,12 @@ public class BookHelperImpl implements BookServiceHelper {
   }
 
 
-  private Book createBookWithNewAuthors(String name, Long categoryId, String[] authors, String isbn, Double price) {
+  private Book createBookWithNewAuthors(String name, Long categoryId, String[] authors, String isbn, Double price, String description) {
     Book book = new Book();
     book.name = name;
     book.isbn = isbn;
     book.price = price;
+    book.description = description;
     book.category = categoryRepository.findOne(categoryId);
     for (String authorName : authors) {
       Author author = createAuthor(authorName);

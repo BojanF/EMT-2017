@@ -17,4 +17,7 @@ public interface CartItemRepository extends CrudRepository<CartItem, Long> {
 
 
     List<CartItem> findByCartId(Long id);
+
+    @Query(value = "select ci from mk.ukim.finki.emt.model.jpa.CartItem ci where ci.cart.id = :cartId and ci.book.id = :bookId")
+    CartItem findBookInCart(@Param("cartId") Long cartId, @Param("bookId") Long bookId);
 }

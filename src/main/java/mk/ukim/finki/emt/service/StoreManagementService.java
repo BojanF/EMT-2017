@@ -41,7 +41,8 @@ public interface StoreManagementService {
     String[] newAuthors,
     Long[] existingAuthors,
     String isbn,
-    Double price
+    Double price,
+    String description
   );
 
   Book updateBook(

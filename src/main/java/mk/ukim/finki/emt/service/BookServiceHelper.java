@@ -21,7 +21,8 @@ public interface BookServiceHelper {
     Long categoryId,
     String[] authors,
     Long[] existingAuthors, String isbn,
-    Double price
+    Double price,
+    String description
   );
 
 
@@ -30,7 +31,8 @@ public interface BookServiceHelper {
     Long categoryId,
     String[] authors,
     String isbn,
-    Double price
+    Double price,
+    String description
   );
 
   Book updateBook(

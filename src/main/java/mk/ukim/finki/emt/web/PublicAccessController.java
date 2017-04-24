@@ -59,6 +59,7 @@ public class PublicAccessController {
     );
 
     model.addAttribute("products", page);
+    model.addAttribute("categoryId", categoryId);
 
     return "index";
   }

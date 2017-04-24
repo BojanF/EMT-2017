@@ -78,7 +78,8 @@ public class AdminController {
       authors.split(";"),
       authorIds,
       isbn,
-      price
+      price,
+      description
     );
     storeManagementService.addBookPicture(product.id, picture.getBytes(), picture.getContentType());
 

@@ -52,8 +52,8 @@ public class StoreManagementServiceImpl implements StoreManagementService {
 
   @Override
   public Book createBook(String name, Long categoryId, String[] newAuthors,
-                         Long[] existingAuthors, String isbn, Double price) {
-    return bookServiceHelper.createBook(name, categoryId, newAuthors, existingAuthors, isbn, price);
+                         Long[] existingAuthors, String isbn, Double price, String description) {
+    return bookServiceHelper.createBook(name, categoryId, newAuthors, existingAuthors, isbn, price, description);
   }
 
   @Override

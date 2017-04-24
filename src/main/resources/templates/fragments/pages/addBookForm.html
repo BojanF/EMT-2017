@@ -1,20 +1,64 @@
 <!DOCTYPE html>
-Create product:
-<form th:action="@{/admin/book}"
-      enctype="multipart/form-data"
-      method="POST"
-      xmlns:th="http://www.thymeleaf.org">
-  Name: <input type="text" name="name"> </input> <br/>
-  Description: <input type="text" name="description"> </input><br/>
-  Category: <select name="categoryId">
-                <option th:each="c : ${categories}" th:value="${c.id}" th:text="${c.name}"></option>
-            </select><br/>
-  ISBN: <input type="text" name="isbn"> </input><br/>
-  Price: <input type="text" name="price"> </input><br/>
-  Un-existing Authors: <input type="text" name="authors"> </input><br/>
-  Authors:  <select multiple="true" name="authorIds">
-    <option th:each="a : ${authors}" th:value="${a.id}" th:text="${a.nameAndLastName}"></option>
-            </select><br/>
-  Picture (png): <input type="file" name="picture"></input><br/>
-  <input type="submit"></input>
-</form>
+<style>
+    .col-md-9{
+        padding-bottom: 5px;
+    }
+    .panel-footer{
+        padding-bottom: 4%;
+    }
+</style>
+<div class="panel panel-primary">
+    <div class="panel-heading"> Create product: </div>
+    <div class="panel-body">
+        <form id="addBook" th:action="@{/admin/book}"
+              enctype="multipart/form-data"
+              method="POST"
+              xmlns:th="http://www.thymeleaf.org">
+
+                <label class="col-md-3"> Name: </label>
+                <div class="col-md-9">
+                    <input class="form-control" type="text" name="name"> </input> <br/>
+                </div>
+                <label class="col-md-3"> Description:</label>
+                <div class="col-md-9">
+                    <input class="form-control" type="text" name="description"> </input><br/>
+                </div>
+                <label class="col-md-3"> Category: </label>
+                <div class="col-md-9">
+                    <select class="form-control" name="categoryId">
+                        <option th:each="c : ${categories}" th:value="${c.id}" th:text="${c.name}"></option>
+                    </select><br/>
+                </div>
+
+                <label class="col-md-3"> ISBN: </label>
+                <div class="col-md-9">
+                    <input class="form-control" type="text" name="isbn"> </input><br/>
+                </div>
+                <label class="col-md-3"> Price: </label>
+                <div class="col-md-9">
+                    <input class="form-control" type="text" name="price"> </input><br/>
+                </div>
+
+                <label class="col-md-3"> Un-existing Authors: </label>
+                <div class="col-md-9">
+                    <input class="form-control" type="text" name="authors"> </input><br/>
+                </div>
+                <label class="col-md-3"> Authors: </label>
+                <div class="col-md-9">
+                    <select class="form-control" multiple="true" name="authorIds">
+                        <option th:each="a : ${authors}" th:value="${a.id}" th:text="${a.nameAndLastName}"></option>
+                    </select><br/>
+                </div>
+                <label class="col-md-3"> Picture (png): </label>
+                <div class="col-md-9">
+                    <input  type="file" name="picture"> </input><br/>
+                </div>
+        </form>
+    </div>
+    <div class="panel-footer">
+        <button type="submit" form="addBook" class="btn btn-primary col-md-offset-5 col-md-1">
+            <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+            Submit
+        </button>
+    </div>
+</div>

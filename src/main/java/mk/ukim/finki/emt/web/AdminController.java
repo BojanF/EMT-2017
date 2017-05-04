@@ -4,6 +4,7 @@ import mk.ukim.finki.emt.model.jpa.Book;
 import mk.ukim.finki.emt.model.jpa.Category;
 import mk.ukim.finki.emt.persistence.AuthorsRepository;
 import mk.ukim.finki.emt.service.StoreManagementService;
+import mk.ukim.finki.emt.service.UserRegistrationMailSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
@@ -27,11 +28,12 @@ public class AdminController {
 
   StoreManagementService storeManagementService;
 
+
   @Autowired
   AuthorsRepository authorsRepository;
 
   @Autowired
-  public AdminController(StoreManagementService storeManagementService) {
+  public AdminController(StoreManagementService staoreManagementService) {
     this.storeManagementService = storeManagementService;
   }
 

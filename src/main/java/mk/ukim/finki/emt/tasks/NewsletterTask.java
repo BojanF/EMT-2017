@@ -23,7 +23,8 @@ public class NewsletterTask {
     System.out.println("Sending newsletter");
   }
 
-  @Scheduled(fixedRate = 20000, initialDelay = 1000)
+  //@Scheduled(fixedRate = 20000, initialDelay = 1000)
+  @Scheduled(cron = "0 1 */1 * * *")
   public void executeOnEvery20seconds() {
     System.out.println("Started test1");
   }

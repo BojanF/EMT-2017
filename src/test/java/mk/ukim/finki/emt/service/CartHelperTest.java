@@ -56,7 +56,7 @@ public class CartHelperTest {
         Category c = new Category();
         c.name = "Java programming";
         Category base = categoryRepository.save(c);
-                Book book = serviceHelper.createBook("Java essentials", base.id, new String[]{"Joshua Bloch"}, "1a", 100d, "Lorem Ipsum");
+        Book book = serviceHelper.createBook("Java essentials", base.id, new String[]{"Joshua Bloch"}, "1a", 100d, "Lorem Ipsum");
         Book book2 = serviceHelper.createBook("Effective Java", base.id, new String[]{"Joshua Bloch"}, "1b", 120d, "Lorem Ipsum");
         Book book3 = serviceHelper.createBook("Thinking in Java", base.id, new String[]{"Bruce Eckel"}, "1c", 140d, "Lorem Ipsum");
         bookList = new ArrayList<Book>();
@@ -93,7 +93,7 @@ public class CartHelperTest {
         cartHelper.removeCartItem(cart, cartItem);
         Assert.assertNull(cartItemRepository.findOne(cartItem.id));
     }
-
+//kosnica
     @Test
     public void testUpdateCartTotalPrice(){
         Cart cart = cartHelper.createCart(LocalDateTime.now().plusMonths(1), 0d);

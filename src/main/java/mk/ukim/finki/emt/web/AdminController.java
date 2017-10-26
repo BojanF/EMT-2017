@@ -26,16 +26,11 @@ import java.sql.SQLException;
 @Controller
 public class AdminController {
 
+  @Autowired
   StoreManagementService storeManagementService;
-
 
   @Autowired
   AuthorsRepository authorsRepository;
-
-  @Autowired
-  public AdminController(StoreManagementService staoreManagementService) {
-    this.storeManagementService = storeManagementService;
-  }
 
   @RequestMapping(value = {"/admin/category"}, method = RequestMethod.GET)
   public String addCategory(Model model) {

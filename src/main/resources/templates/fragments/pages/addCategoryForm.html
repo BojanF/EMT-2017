@@ -1,9 +1,41 @@
 <!DOCTYPE html>
-Create category:
+<!--Create category:
 <form th:action="@{/admin/category}"
       method="POST"
       xmlns:th="http://www.thymeleaf.org">
 
   Name: <input type="text" name="categoryName"> </input>
-  <input type="submit">Submit</input>
-</form>
+  <input type="submit"></input>
+</form>-->
+
+<style>
+  .col-md-10{
+    padding-bottom: 5px;
+  }
+  .panel-footer{
+    padding-bottom: 4%;
+  }
+</style>
+<div class="panel panel-success">
+  <div class="panel-heading"> Create product: </div>
+  <div class="panel-body">
+    <form id="addCategory" th:action="@{/admin/category}"
+          enctype="multipart/form-data"
+          method="POST"
+          xmlns:th="http://www.thymeleaf.org">
+
+      <label class="col-md-2"> Name: </label>
+      <div class="col-md-10">
+        <input class="form-control" type="text" name="categoryName"> </input> <br/>
+      </div>
+
+
+    </form>
+  </div>
+  <div class="panel-footer">
+    <button type="submit" form="addCategory" class="btn btn-primary col-md-offset-5 col-md-2">
+      <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+      Add new category
+    </button>
+  </div>
+</div>

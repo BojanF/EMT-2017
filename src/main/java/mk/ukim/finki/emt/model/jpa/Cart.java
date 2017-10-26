@@ -1,6 +1,5 @@
 package mk.ukim.finki.emt.model.jpa;
 
-import org.hibernate.annotations.Type;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;

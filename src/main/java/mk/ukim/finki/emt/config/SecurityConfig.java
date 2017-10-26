@@ -6,6 +6,7 @@ import mk.ukim.finki.emt.authentication.OAuth2TokenService;
 import mk.ukim.finki.emt.authentication.OAuthClientResource;
 import mk.ukim.finki.emt.model.enums.Provider;
 import mk.ukim.finki.emt.model.enums.UserType;
+import mk.ukim.finki.emt.persistence.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,9 +94,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
       .antMatchers("/me", "/oauth/authorize", "/oauth/token", "/user")
       .authenticated();
 
-    http.authorizeRequests()
-      .antMatchers("/admin/**")
-      .hasRole("ADMIN");
+//    http.authorizeRequests()
+//      .antMatchers("/admin/**")
+//      .hasRole("ADMIN");
 
     http.authorizeRequests()
       .antMatchers("/**")
@@ -107,18 +108,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   }
 
+  @Autowired
+  private UserRepository userRepository;
+
   //ldap
-  /*@Override
+  @Override
   public void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth
-            .ldapAuthentication()
-            .userDnPatterns("uid={0},ou=people")
-            .groupSearchBase("ou=groups")
-            .contextSource(contextSource())
-            .passwordCompare()
-            .passwordEncoder(new LdapShaPasswordEncoder())
-            .passwordAttribute("userPassword");
-  }*/
+
+    auth.ldapAuthentication().ldapAuthoritiesPopulator(new CustomAuthoritiesPopulator(userRepository))
+            .userSearchFilter("yourfilter")
+            .userSearchFilter("uid={0}")
+            .contextSource()
+            .url("ldap://kostancev.com:389/dc=kostancev,dc=com");
+
+  }
 
 
 
